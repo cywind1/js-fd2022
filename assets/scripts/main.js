@@ -4,14 +4,14 @@
 class NavInteraction {
   constructor(ele) {
     this.navBar = ele;
-    this.navLinks = this.navBar.querySelectorAll('a');
+    this.navLinks = this.navBar.querySelectorAll("a");
     this.lastActiveNavElement = false;
   }
 
   addInteraction() {
     this.navLinks.forEach((item) => {
-      const navItem = item.closest('li');
-      navItem.addEventListener('click', (ele) => {
+      const navItem = item.closest("li");
+      navItem.addEventListener("click", (ele) => {
         const { currentTarget } = ele;
         this.changeStateOfNavItem(currentTarget);
       });
@@ -20,15 +20,15 @@ class NavInteraction {
 
   changeStateOfNavItem(element) {
     const target = element;
-    if (this.lastActiveNavElement) this.lastActiveNavElement.dataset.state = '';
-    target.dataset.state = 'active';
+    if (this.lastActiveNavElement) this.lastActiveNavElement.dataset.state = "";
+    target.dataset.state = "active";
     this.lastActiveNavElement = target;
   }
 }
 
 class Comments {
   constructor(pattern) {
-    this.templateUrl = '/templates/comment.html';
+    this.templateUrl = "/mustache-templates/comment.html";
     this.target = document.querySelector(pattern);
     this.commentUrl = this.target.dataset.jsComments;
   }
@@ -59,11 +59,11 @@ const scrollSpy = (navInteraction) => {
     const { id } = target;
 
     const navLink = document.querySelector(`a[href*=${id}]`);
-    const navItem = navLink.closest('li');
+    const navItem = navLink.closest("li");
     navInteraction.changeStateOfNavItem(navItem);
   });
 
-  const elementsWithId = document.querySelectorAll('main > [id]');
+  const elementsWithId = document.querySelectorAll("main > [id]");
   elementsWithId.forEach((ele) => intersectionObserver.observe(ele));
 };
 
@@ -74,8 +74,8 @@ const vueComments = () => {
   createApp({
     data() {
       return {
-        jsonUrl: '/json/comments.json',
-        message: 'Hello Vue!',
+        jsonUrl: "/assets/json/comments.json",
+        message: "Hello Vue!",
         comments: [],
       };
     },
@@ -94,21 +94,20 @@ const vueComments = () => {
     mounted() {
       this.fetchData(this.jsonUrl);
     },
-
-  }).mount('#vue-comments');
+  }).mount("#vue-comments");
 };
 
 /* Main
 ############################################################################ */
 
-document.addEventListener('DOMContentLoaded', () => {
-  const navbar = document.querySelector('.navbar');
+document.addEventListener("DOMContentLoaded", () => {
+  const navbar = document.querySelector(".navbar");
   const navInteraction = new NavInteraction(navbar);
   navInteraction.addInteraction();
 
   scrollSpy(navInteraction);
 
-  const comments = new Comments('[data-js-comments]');
+  const comments = new Comments("[data-js-comments]");
   comments.render();
 
   vueComments();
