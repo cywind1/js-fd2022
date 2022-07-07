@@ -5,6 +5,7 @@
   ],
   "liveServer.settings.port": 5501,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
   }
 }
